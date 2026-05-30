@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/btnBackBooking"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#111111" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Review Order"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="#111111"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layoutBottomPayBar"
+        android:layout_below="@id/layoutHeader"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COURT RESERVATION"
+                    android:textColor="#5D6F2A"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/poppins_bold" />
+
+                <TextView
+                    android:id="@+id/tvBookCourtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Padel Arena Grand Horizon"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="#111111"
+                    android:textSize="18sp"
+                    android:layout_marginTop="2dp" />
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="12dp"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date" android:fontFamily="@font/poppins_regular" android:textColor="#555555" android:textSize="13sp"/>
+                    <TextView android:id="@+id/tvBookDate" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Monday, 13 Nov" android:fontFamily="@font/poppins_semibold" android:textColor="#111111" android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Time Slot" android:fontFamily="@font/poppins_regular" android:textColor="#555555" android:textSize="13sp"/>
+                    <TextView android:id="@+id/tvBookSlot" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="12:30 - 13:30" android:fontFamily="@font/poppins_semibold" android:textColor="#111111" android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Duration" android:fontFamily="@font/poppins_regular" android:textColor="#555555" android:textSize="13sp"/>
+                    <TextView android:id="@+id/tvBookDuration" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="60 Minutes" android:fontFamily="@font/poppins_semibold" android:textColor="#111111" android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="8dp"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Amount" android:fontFamily="@font/poppins_bold" android:textColor="#111111" android:textSize="15sp"/>
+                    <TextView android:id="@+id/tvBookCourtPrice" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Rp 150.000" android:fontFamily="@font/poppins_bold" android:textColor="#111111" android:textSize="16sp" android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Payment Method"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="#111111"
+                android:textSize="15sp"
+                android:layout_marginBottom="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+
+                <RelativeLayout
+                    android:id="@+id/btnHeaderEWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:paddingHorizontal="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="E-wallet"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="#111111"
+                        android:textSize="14sp" />
+                    <ImageView
+                        android:id="@+id/ivArrowEWallet"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_down" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutChildEWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible">
+
+                    <RadioGroup android:id="@+id/rgEWallet" android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgDana" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/e_dana"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgDana" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="Dana" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbDana" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgOvo" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/e_ovo"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgOvo" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="OVO" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbOvo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgSpay" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/e_spay"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgSpay" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="ShopeePay" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbSpay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/btnHeaderVA"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:paddingHorizontal="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Virtual Account"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="#111111"
+                        android:textSize="14sp" />
+                    <ImageView
+                        android:id="@+id/ivArrowVA"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_down" /> </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutChildVA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone">
+
+                    <RadioGroup android:id="@+id/rgVA" android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgBri" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/va_bri"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgBri" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="BRI Virtual Account" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbBri" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgBca" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/va_bca"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgBca" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="BCA Virtual Account" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbBca" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgMandiri" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/va_mandiri"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgMandiri" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="Mandiri Virtual Account" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbMandiri" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgBsi" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/va_bsi"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgBsi" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="BSI Virtual Account" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbBsi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="50dp">
+                            <ImageView android:id="@+id/imgBni" android:layout_width="28dp" android:layout_height="28dp" android:layout_centerVertical="true" android:src="@drawable/va_bni"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/imgBni" android:layout_centerVertical="true" android:layout_marginStart="14dp" android:text="BNI Virtual Account" android:fontFamily="@font/poppins_medium" android:textColor="#222222" android:textSize="14sp"/>
+                            <RadioButton android:id="@+id/rbBni" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:buttonTint="#5D6F2A"/>
+                        </RelativeLayout>
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Detail"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="#111111"
+                android:textSize="15sp"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="30dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Booking Court" android:fontFamily="@font/poppins_regular" android:textColor="#666666" android:textSize="13sp"/>
+                    <TextView android:id="@+id/tvBillPriceDetail" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Rp 150.000" android:fontFamily="@font/poppins_regular" android:textColor="#222222" android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Personal Insurance" android:fontFamily="@font/poppins_regular" android:textColor="#666666" android:textSize="13sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Rp 5.000" android:fontFamily="@font/poppins_regular" android:textColor="#222222" android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Service Fee" android:fontFamily="@font/poppins_regular" android:textColor="#666666" android:textSize="13sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Rp 2.000" android:fontFamily="@font/poppins_regular" android:textColor="#222222" android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutMethodFeeDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tvMethodFeeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Admin Fee"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="#666666"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/tvMethodFeePrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rp 0"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="#222222"
+                        android:textSize="13sp" android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutBottomPayBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Payment"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="#777777"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tvBookGrandTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 157.000"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="#111111"
+                android:textSize="19sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnProceedPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="#D4ED5B"
+            android:text="Payment ›"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="#111111"
+            android:textSize="14sp"
+            app:cornerRadius="24dp" />
+    </LinearLayout>
+</RelativeLayout>

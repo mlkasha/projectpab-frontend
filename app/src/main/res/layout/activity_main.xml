@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <ImageView
+        android:id="@+id/ivBgLogin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="Background Login"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/ivLogoMain"
+        android:layout_width="160dp"
+        android:layout_height="0dp"
+        android:src="@drawable/logo_deuce"
+        android:transitionName="logo_transform"
+        android:contentDescription="Deuce Logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:id="@+id/tvFindCourt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="FIND YOUR COURT,\nANYWHERE"
+        android:includeFontPadding="false"
+        android:lineHeight="40sp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@id/tvSubTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvSubTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Booking your next match has never been easier"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="REGISTER"
+        android:textColor="@color/primary_lime"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="16sp"
+        app:backgroundTint="@android:color/transparent"
+        app:strokeColor="@color/primary_lime"
+        app:strokeWidth="2dp"
+        app:cornerRadius="50dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="LOGIN"
+        android:textColor="@color/dark_text"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="16sp"
+        app:backgroundTint="@color/primary_lime"
+        app:cornerRadius="50dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@id/tvPrivacyPolicy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:id="@+id/tvPrivacyPolicy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="by registering you are accepting our terms of use and privacy policy"
+        android:textColor="#888888"
+        android:textSize="10sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

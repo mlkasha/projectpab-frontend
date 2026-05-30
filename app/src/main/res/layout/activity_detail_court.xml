@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layoutBottomBar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp">
+
+                <ImageView
+                    android:id="@+id/ivDetailCourt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/lap1" />
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/bg_round_white"
+                    android:elevation="4dp"
+                    android:contentDescription="Back"
+                    android:src="@drawable/ic_arrow_back" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                android:background="@drawable/bg_detail_card"
+                android:elevation="8dp"
+                android:orientation="vertical"
+                android:paddingTop="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/tvDetailTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Padel Arena Grand Horizon"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="#111111"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetailLocationRate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="📍 Jakarta Selatan • 1.2 km • ⭐ 4.9"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="#555555"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayoutDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#FFFFFF"
+                    app:tabBackground="@android:color/white"
+                    app:tabIndicatorColor="#5D6F2A"
+                    app:tabSelectedTextColor="#5D6F2A"
+                    app:tabTextColor="#777777"
+                    app:tabRippleColor="@android:color/transparent" />
+
+                <FrameLayout
+                    android:id="@+id/tabContentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:paddingTop="10dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layoutCourtsTabContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="24dp">
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                            <ImageView android:layout_width="46dp" android:layout_height="46dp" android:background="@drawable/bg_round_grey" android:padding="12dp" android:src="@android:drawable/ic_menu_myplaces"/>
+                            <TextView android:id="@+id/tvAmenityShower" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Shower" android:fontFamily="@font/poppins_medium" android:textSize="12sp" android:textColor="#555555"/>
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                            <ImageView android:layout_width="46dp" android:layout_height="46dp" android:background="@drawable/bg_round_grey" android:padding="12dp" android:src="@android:drawable/ic_menu_slideshow"/>
+                            <TextView android:id="@+id/tvAmenityCafe" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Cafe" android:fontFamily="@font/poppins_medium" android:textSize="12sp" android:textColor="#555555"/>
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                            <ImageView android:layout_width="46dp" android:layout_height="46dp" android:background="@drawable/bg_round_grey" android:padding="12dp" android:src="@android:drawable/ic_menu_manage"/>
+                            <TextView android:id="@+id/tvAmenityRental" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Rental" android:fontFamily="@font/poppins_medium" android:textSize="12sp" android:textColor="#555555"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Date"
+                        android:textColor="#111111"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:paddingBottom="8dp"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        android:layout_marginBottom="24dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout android:id="@+id/dateCard1" android:layout_width="56dp" android:layout_height="62dp" android:layout_marginEnd="10dp" android:background="@drawable/bg_round_grey" android:backgroundTint="#D4ED5B" android:gravity="center" android:orientation="vertical">
+                                <TextView android:id="@+id/tvMonth1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAY" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="8sp"/>
+                                <TextView android:id="@+id/tvNum1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="30" android:textColor="@android:color/black" android:fontFamily="@font/poppins_bold" android:textSize="15sp"/>
+                                <TextView android:id="@+id/tvDay1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SAT" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="9sp"/>
+                            </LinearLayout>
+                            <LinearLayout android:id="@+id/dateCard2" android:layout_width="56dp" android:layout_height="62dp" android:layout_marginEnd="10dp" android:background="@drawable/bg_round_grey" android:backgroundTint="#F5F5F5" android:gravity="center" android:orientation="vertical">
+                                <TextView android:id="@+id/tvMonth2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAY" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="8sp"/>
+                                <TextView android:id="@+id/tvNum2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="31" android:textColor="@android:color/black" android:fontFamily="@font/poppins_bold" android:textSize="15sp"/>
+                                <TextView android:id="@+id/tvDay2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SUN" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="9sp"/>
+                            </LinearLayout>
+                            <LinearLayout android:id="@+id/dateCard3" android:layout_width="56dp" android:layout_height="62dp" android:layout_marginEnd="10dp" android:background="@drawable/bg_round_grey" android:backgroundTint="#F5F5F5" android:gravity="center" android:orientation="vertical">
+                                <TextView android:id="@+id/tvMonth3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="JUN" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="8sp"/>
+                                <TextView android:id="@+id/tvNum3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="01" android:textColor="@android:color/black" android:fontFamily="@font/poppins_bold" android:textSize="15sp"/>
+                                <TextView android:id="@+id/tvDay3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MON" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="9sp"/>
+                            </LinearLayout>
+                            <LinearLayout android:id="@+id/dateCard4" android:layout_width="56dp" android:layout_height="62dp" android:layout_marginEnd="10dp" android:background="@drawable/bg_round_grey" android:backgroundTint="#F5F5F5" android:gravity="center" android:orientation="vertical">
+                                <TextView android:id="@+id/tvMonth4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="JUN" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="8sp"/>
+                                <TextView android:id="@+id/tvNum4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="02" android:textColor="@android:color/black" android:fontFamily="@font/poppins_bold" android:textSize="15sp"/>
+                                <TextView android:id="@+id/tvDay4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TUE" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="9sp"/>
+                            </LinearLayout>
+                            <LinearLayout android:id="@+id/dateCard5" android:layout_width="56dp" android:layout_height="62dp" android:layout_marginEnd="10dp" android:background="@drawable/bg_round_grey" android:backgroundTint="#F5F5F5" android:gravity="center" android:orientation="vertical">
+                                <TextView android:id="@+id/tvMonth5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="JUN" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="8sp"/>
+                                <TextView android:id="@+id/tvNum5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="03" android:textColor="@android:color/black" android:fontFamily="@font/poppins_bold" android:textSize="15sp"/>
+                                <TextView android:id="@+id/tvDay5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WED" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="9sp"/>
+                            </LinearLayout>
+                            <LinearLayout android:id="@+id/dateCard6" android:layout_width="56dp" android:layout_height="62dp" android:layout_marginEnd="10dp" android:background="@drawable/bg_round_grey" android:backgroundTint="#F5F5F5" android:gravity="center" android:orientation="vertical">
+                                <TextView android:id="@+id/tvMonth6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="JUN" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="8sp"/>
+                                <TextView android:id="@+id/tvNum6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="04" android:textColor="@android:color/black" android:fontFamily="@font/poppins_bold" android:textSize="15sp"/>
+                                <TextView android:id="@+id/tvDay6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="THU" android:textColor="@android:color/darker_gray" android:fontFamily="@font/poppins_medium" android:textSize="9sp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Duration"
+                        android:textColor="#111111"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:paddingBottom="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_marginBottom="24dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDuration1"
+                            android:layout_width="0dp"
+                            android:layout_height="46dp"
+                            android:layout_weight="1"
+                            android:layout_marginHorizontal="4dp"
+                            android:text="1 Hour"
+                            android:textSize="13sp"
+                            android:textColor="@android:color/black"
+                            android:backgroundTint="#F5F5F5"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textAllCaps="false"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:cornerRadius="12dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDuration15"
+                            android:layout_width="0dp"
+                            android:layout_height="46dp"
+                            android:layout_weight="1"
+                            android:layout_marginHorizontal="4dp"
+                            android:text="1.5 Hours"
+                            android:textSize="13sp"
+                            android:textColor="@android:color/white"
+                            android:backgroundTint="#5D6F2A"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textAllCaps="false"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:cornerRadius="12dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDuration2"
+                            android:layout_width="0dp"
+                            android:layout_height="46dp"
+                            android:layout_weight="1"
+                            android:layout_marginHorizontal="4dp"
+                            android:text="2 Hours"
+                            android:textSize="13sp"
+                            android:textColor="@android:color/black"
+                            android:backgroundTint="#F5F5F5"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textAllCaps="false"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:cornerRadius="12dp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Available Slots"
+                        android:textColor="#111111"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:paddingBottom="8dp"/>
+
+                    <GridLayout
+                        android:id="@+id/gridSlotsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="4"
+                        android:alignmentMode="alignBounds"
+                        android:columnOrderPreserved="false"
+                        android:layout_marginBottom="24dp">
+
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot1" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="06:00" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#D4ED5B" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot2" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="07:30" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot3" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="09:00" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot4" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="10:30" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot5" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="15:30" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot6" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="17:00" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot7" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="18:30" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                        <com.google.android.material.button.MaterialButton android:id="@+id/btnSlot8" android:layout_width="0dp" android:layout_height="44dp" android:layout_columnWeight="1" android:layout_margin="2dp" android:text="20:00" android:textSize="12sp" android:textColor="@android:color/black" android:backgroundTint="#EAEAEA" android:fontFamily="@font/poppins_medium" android:textAllCaps="false" android:insetTop="0dp" android:insetBottom="0dp" app:cornerRadius="12dp"/>
+                    </GridLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About this court"
+                        android:textColor="#111111"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:paddingBottom="6dp"/>
+
+                    <TextView
+                        android:id="@+id/tvAboutCourtBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F9F9F9"
+                        android:padding="16dp"
+                        android:text="Description text goes here..."
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="#444444"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="16dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Price"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="#777777"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvDetailPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 150.000"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="#111111"
+                android:textSize="19sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnBookNow"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="#2C2C2C"
+            android:text="Book Now"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:cornerRadius="24dp" />
+    </LinearLayout>
+</RelativeLayout>

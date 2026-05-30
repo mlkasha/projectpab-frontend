@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F9FA">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="#5D6F2A"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MY PROFILE"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/ic_person"
+                android:background="@android:drawable/progress_horizontal"
+                android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/tvBadgeStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ Active Member"
+                android:textColor="#111111"
+                android:textSize="11sp"
+                android:background="@android:drawable/toast_frame"
+                android:backgroundTint="#CCFF00"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="3dp"
+                android:layout_marginTop="-8dp"
+                android:fontFamily="@font/poppins_medium" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="-25dp"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="3dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tvProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mengambil nama..."
+                android:textColor="#222222"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/tvProfileRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#5D6F2A"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EFEFEF"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registered Email"
+                android:textColor="#999999"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <TextView
+                android:id="@+id/tvProfileEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginBottom="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone Number"
+                android:textColor="#999999"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_regular" />
+
+            <TextView
+                android:id="@+id/tvProfilePhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upcoming Matches"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:backgroundTint="#FFFFFF"
+        android:layout_marginHorizontal="20dp"
+        android:padding="28dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_myplaces"
+            app:tint="#A0A0A0"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Itching to go courtside?"
+            android:textColor="#777777"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginBottom="14dp"/>
+
+        <Button
+            android:id="@+id/btnBookNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BOOK NOW!"
+            android:textColor="#111111"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_bold"
+            android:backgroundTint="#CCFF00"
+            android:paddingHorizontal="24dp"/>
+    </LinearLayout>
+
+</LinearLayout>

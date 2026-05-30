@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="40dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo_deuce" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ⇄ "
+            android:textSize="24sp"
+            android:textColor="#BBBBBB"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <ImageView
+            android:id="@+id/imgEWalletLogo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo_deuce" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:indeterminateTint="#5D6F2A"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tvBridgeStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mengalihkan Anda ke halaman pembayaran...\nMohon jangan menutup aplikasi."
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineSpacingMultiplier="1.2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Secure Payment by Deuce Padel"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="#999999"
+        android:textSize="11sp"
+        android:layout_marginTop="50dp" />
+
+</LinearLayout>

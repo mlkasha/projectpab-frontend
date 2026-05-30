@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/tvVaBankTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BCA Virtual Account"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#111111"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOMOR VIRTUAL ACCOUNT"
+        android:textSize="12sp"
+        android:textColor="#777777"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvVaNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="88308123456789"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#5D6F2A"/>
+
+        <Button
+            android:id="@+id/btnCopyVa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SALIN"
+            android:textSize="12sp"
+            android:backgroundTint="#2C2C2C"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOTAL TAGIHAN"
+        android:textSize="12sp"
+        android:textColor="#777777"/>
+
+    <TextView
+        android:id="@+id/tvVaAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp 158.500"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#111111"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cara Pembayaran ATM/M-Banking:"
+        android:textStyle="bold"
+        android:textColor="#111111"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Buka M-Banking Anda\n2. Pilih Transfer > Virtual Account\n3. Masukkan nomor VA di atas\n4. Periksa nominal lalu masukkan PIN ATM Anda."
+        android:textColor="#555555"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnUploadProof"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="UNGGAH BUKTI TRANSFER"
+        android:textStyle="bold"
+        android:backgroundTint="#5D6F2A"/>
+</LinearLayout>
