@@ -143,21 +143,29 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupBottomNavigationLogic() {
         menuExplore.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+            overridePendingTransition(0, 0)
+            finish()
         }
 
         menuBookings.setOnClickListener {
-            Toast.makeText(this, "Halaman Jadwal Booking sedang dalam pengembangan!", Toast.LENGTH_SHORT).show()
+            startActivity(
+                Intent(this, BookingActivity::class.java)
+            )
+            overridePendingTransition(0, 0)
         }
 
         menuHistory.setOnClickListener {
-            val intentHistory = Intent(this, BookingHistoryActivity::class.java)
-            startActivity(intentHistory)
+            startActivity(
+                Intent(this, BookingHistoryActivity::class.java)
+            )
             overridePendingTransition(0, 0)
         }
 
         menuProfile.setOnClickListener {
-            val intentProfile = Intent(this, ProfileActivity::class.java)
-            startActivity(intentProfile)
+            startActivity(
+                Intent(this, ProfileActivity::class.java)
+            )
             overridePendingTransition(0, 0)
         }
     }

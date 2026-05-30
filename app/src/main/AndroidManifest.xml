@@ -26,6 +26,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="false" />
@@ -41,6 +42,7 @@
         <activity
             android:name=".activity.DetailCourtActivity"
             android:exported="false" />
+
         <activity
             android:name=".activity.BookingActivity"
             android:exported="false" />
@@ -48,12 +50,17 @@
         <activity
             android:name=".activity.EWalletPaymentActivity"
             android:exported="false" />
+
         <activity
             android:name=".activity.VirtualAccountActivity"
             android:exported="false" />
 
         <activity
             android:name=".activity.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.BookingHistoryActivity"
             android:exported="false" />
 
         <activity
