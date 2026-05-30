@@ -25,14 +25,14 @@ class DetailCourtActivity : AppCompatActivity() {
     private lateinit var layoutCourtsTabContent: LinearLayout
     private lateinit var tvPrice: TextView
     private lateinit var btnBookNow: Button
-    private lateinit var ivDetailCourt: ImageView // 🛠️ FIX: Sesuai dengan ID XML kamu
+    private lateinit var ivDetailCourt: ImageView
 
     private var coachList: List<CoachItem> = emptyList()
     private var eventList: List<EventItem> = emptyList()
     private var courtDesc: String = ""
     private var baseCourtPrice: Double = 150000.0
     private var courtName: String = ""
-    private var courtPhoto: String = "lap1" // Penampung string nama gambar
+    private var courtPhoto: String = "lap1"
 
     private var selectedDate: Date = Date()
     private var selectedSlot: String = "06:00"
@@ -50,7 +50,7 @@ class DetailCourtActivity : AppCompatActivity() {
         tvPrice = findViewById(R.id.tvDetailPrice)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         btnBookNow = findViewById(R.id.btnBookNow)
-        ivDetailCourt = findViewById(R.id.ivDetailCourt) // 🛠️ FIX: Mengisi komponen gambar asli dari XML kamu
+        ivDetailCourt = findViewById(R.id.ivDetailCourt)
 
         layoutCourtsTabContent = findViewById(R.id.layoutCourtsTabContent)
         container = findViewById(R.id.tabContentContainer)
@@ -62,15 +62,13 @@ class DetailCourtActivity : AppCompatActivity() {
         baseCourtPrice = intent.getDoubleExtra("COURT_PRICE", 150000.0)
         courtDesc = intent.getStringExtra("COURT_DESC") ?: "Experience our world-class panoramic Padel court."
 
-        // 🛠️ FIX: Tangkap data nama gambar dari halaman utama (HomeActivity / Adapter)
         courtPhoto = intent.getStringExtra("COURT_PHOTO") ?: "lap1"
 
-        // 🛠️ FIX: Tampilkan gambar lapangan yang sesuai di halaman Detail
         val resId = resources.getIdentifier(courtPhoto, "drawable", packageName)
         if (resId != 0) {
             ivDetailCourt.setImageResource(resId)
         } else {
-            ivDetailCourt.setImageResource(R.drawable.lap1) // Gambar cadangan jika error
+            ivDetailCourt.setImageResource(R.drawable.lap1)
         }
 
         tvTitle.text = courtName
@@ -123,8 +121,6 @@ class DetailCourtActivity : AppCompatActivity() {
                 putExtra("COACH_NAME", if (selectedCoachName.isEmpty()) "No Coach" else selectedCoachName)
                 putExtra("COACH_HOUR", selectedCoachHour)
                 putExtra("TOTAL_PRICE", calculatePriceByDurationAndTime())
-
-                // 🛠️ FIX: Kirim estafet data gambar lapangan ke BookingActivity
                 putExtra("COURT_PHOTO", courtPhoto)
             }
             startActivity(intentBooking)

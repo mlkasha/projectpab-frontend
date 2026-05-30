@@ -1,6 +1,8 @@
 package com.pab.deucepadelapp.activity
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -8,6 +10,7 @@ import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
@@ -43,11 +46,15 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var btnFilterNear: MaterialButton
     private lateinit var btnFilterRated: MaterialButton
 
+    private lateinit var menuExplore: LinearLayout
+    private lateinit var menuBookings: LinearLayout
+    private lateinit var menuHistory: LinearLayout
+    private lateinit var menuProfile: LinearLayout
+
     private var originalCourtList: List<CourtItem> = arrayListOf()
     private var shuffledCourtList: List<CourtItem> = arrayListOf()
     private var nearMeCourtList: List<CourtItem> = arrayListOf()
 
-    // Launcher untuk meminta izin runtime permission (Izin akses GPS)
     private val requestLocationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -61,15 +68,12 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Launcher untuk menangani dialog pop-up "Nyalakan GPS" sistem Android
     private val gpsSettingLauncher = registerForActivityResult(
         ActivityResultContracts.StartIntentSenderForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            // User menekan tombol "OK" / menyalakan GPS-nya
             getLastUserLocation()
         } else {
-            // User menekan "No Thanks" / menolak mengaktifkan GPS
             Toast.makeText(this, "Harap aktifkan GPS Anda untuk melihat lapangan terdekat.", Toast.LENGTH_LONG).show()
         }
     }
@@ -81,7 +85,7 @@ class HomeActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        tvHomeUserName = findViewById<TextView>(R.id.tvHomeUserName)
+        tvHomeUserName = findViewById(R.id.tvHomeUserName)
         etSearch = findViewById(R.id.etSearch)
         rvCourts = findViewById(R.id.rvCourts)
 
@@ -89,8 +93,20 @@ class HomeActivity : AppCompatActivity() {
         btnFilterNear = findViewById(R.id.btnFilterNear)
         btnFilterRated = findViewById(R.id.btnFilterRated)
 
-        val userName = intent.getStringExtra("USER_NAME") ?: "Mark"
-        tvHomeUserName.text = "Hello, $userName!"
+        menuExplore = findViewById(R.id.menuExplore)
+        menuBookings = findViewById(R.id.menuBookings)
+        menuHistory = findViewById(R.id.menuHistory)
+        menuProfile = findViewById(R.id.menuProfile)
+
+        val sharedPref = getSharedPreferences("DeucePref", Context.MODE_PRIVATE)
+        val intentName = intent.getStringExtra("USER_NAME")
+
+        if (intentName != null) {
+            sharedPref.edit().putString("USER_NAME", intentName).apply()
+        }
+
+        val cachedUserName = sharedPref.getString("USER_NAME", "Mark")
+        tvHomeUserName.text = "Hello, $cachedUserName!"
 
         rvCourts.layoutManager = LinearLayoutManager(this)
         rvCourts.isNestedScrollingEnabled = false
@@ -99,6 +115,7 @@ class HomeActivity : AppCompatActivity() {
         rvCourts.adapter = courtAdapter
 
         getCourtsFromApi()
+        setupBottomNavigationLogic()
 
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -121,6 +138,27 @@ class HomeActivity : AppCompatActivity() {
             val topRatedCourts = originalCourtList.sortedByDescending { court -> court.rate }
             courtAdapter.updateData(topRatedCourts)
             updateButtonVisuals(selectedMode = "rated")
+        }
+    }
+
+    private fun setupBottomNavigationLogic() {
+        menuExplore.setOnClickListener {
+        }
+
+        menuBookings.setOnClickListener {
+            Toast.makeText(this, "Halaman Jadwal Booking sedang dalam pengembangan!", Toast.LENGTH_SHORT).show()
+        }
+
+        menuHistory.setOnClickListener {
+            val intentHistory = Intent(this, BookingHistoryActivity::class.java)
+            startActivity(intentHistory)
+            overridePendingTransition(0, 0)
+        }
+
+        menuProfile.setOnClickListener {
+            val intentProfile = Intent(this, ProfileActivity::class.java)
+            startActivity(intentProfile)
+            overridePendingTransition(0, 0)
         }
     }
 
@@ -158,7 +196,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Tahap 1: Periksa Izin Aplikasi (Manifest)
     private fun checkLocationPermissionAndFetch() {
         val hasFineLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val hasCoarseLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -172,7 +209,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Tahap 2: Cek Apakah Sensor Device GPS di HP Sedang Menyala Aktif
     private fun checkGpsSystemSettings() {
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000).build()
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
@@ -180,14 +216,12 @@ class HomeActivity : AppCompatActivity() {
         val task = client.checkLocationSettings(builder.build())
 
         task.addOnSuccessListener {
-            // GPS hardware aktif, langsung ambil lokasi
             getLastUserLocation()
         }
 
         task.addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
                 try {
-                    // GPS mati! Munculkan dialog sistem Android otomatis untuk meminta user menyalakan GPS
                     val intentSenderRequest = IntentSenderRequest.Builder(exception.resolution.intentSender).build()
                     gpsSettingLauncher.launch(intentSenderRequest)
                 } catch (sendEx: IntentSender.SendIntentException) {
@@ -197,14 +231,12 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Tahap 3: Ambil Koordinat setelah Izin OK dan Sensor GPS dipastikan Menyala
     private fun getLastUserLocation() {
         try {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
                     getNearMeCourtsFromApi(location.latitude, location.longitude)
                 } else {
-                    // Jika lastLocation null (cache kosong), minta pembaruan koordinat baru secara langsung
                     val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
                         .setMinUpdateIntervalMillis(500)
                         .build()
@@ -271,7 +303,6 @@ class HomeActivity : AppCompatActivity() {
                             rawCourt
                         }
                     }
-                    // Tetap mematuhi urutan murni response default API Near Me
                     courtAdapter.updateData(nearMeCourtList)
                     updateButtonVisuals(selectedMode = "near")
                 } else {

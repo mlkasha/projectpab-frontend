@@ -33,15 +33,12 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
         val court = courtList[position]
         val context = holder.itemView.context
 
-        // 1. WAJIB: Clear view Glide terlebih dahulu agar sisa gambar lama tidak tersangkut saat scroll
         Glide.with(context).clear(holder.ivCourtImage)
 
-        // Set teks informasi dasar lapangan
         holder.tvCourtName.text = court.name
         holder.tvCourtLocation.text = court.description
         holder.tvCourtRating.text = court.rate.toString()
 
-        // Proteksi kalkulasi harga agar berformat ribuan rapi (Rp 150.000)
         val courtPrice = try {
             court.pricePerHour
         } catch (e: Exception) {
@@ -49,9 +46,6 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
         }
         holder.tvCourtPrice.text = "Rp ${String.format("%,.0f", courtPrice)}"
 
-        // =====================================================================
-        // FIX GAMBAR DOUBLE: Cek ID berdasarkan Angka ATAU String Teks bawaan API
-        // =====================================================================
         val idString = court.id.toString().trim()
 
         val imageResource = when {
@@ -61,7 +55,6 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
             idString.contains("4") -> R.drawable.lap4
             idString.contains("5") -> R.drawable.lap5
             else -> {
-                // Jika ID berupa string acak (tidak ada angka 1-5), bagi posisi item agar gambar bervariasi
                 when (position % 5) {
                     0 -> R.drawable.lap1
                     1 -> R.drawable.lap2
@@ -72,16 +65,12 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
             }
         }
 
-        // Render gambar menggunakan Glide secara aman
         Glide.with(context)
             .load(imageResource)
             .placeholder(android.R.drawable.ic_menu_gallery)
             .error(android.R.drawable.ic_menu_report_image)
             .into(holder.ivCourtImage)
 
-        // =====================================================================
-        // LOGIKA KLIK MENUJU DETAIL COURT ACTIVITY
-        // =====================================================================
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DetailCourtActivity::class.java)
 
@@ -92,7 +81,6 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
             intent.putExtra("COURT_PRICE", courtPrice)
             intent.putExtra("COURT_RATE", court.rate)
 
-            // Mengonversi ID Ke String nama drawable agar halaman Detail ikut sinkron gambarnya
             val photoNameString = when (imageResource) {
                 R.drawable.lap1 -> "lap1"
                 R.drawable.lap2 -> "lap2"
@@ -103,7 +91,6 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
             }
             intent.putExtra("COURT_PHOTO", photoNameString)
 
-            // Mengirim data objek pelengkap menggunakan JSON String
             val gson = Gson()
             try { intent.putExtra("COURT_COACHES", gson.toJson(court.coaches)) } catch (e: Exception) {}
             try { intent.putExtra("COURT_EVENTS", gson.toJson(court.events)) } catch (e: Exception) {}

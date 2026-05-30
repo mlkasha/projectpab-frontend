@@ -56,10 +56,13 @@
             android:name=".activity.ProfileActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".activity.ReceiptSimulationActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
 
     </application>
 

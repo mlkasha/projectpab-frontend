@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.pab.deucepadelapp.R
-import com.pab.deucepadelapp.activity.RegisterActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +24,5 @@ class MainActivity : AppCompatActivity() {
             val intentToLogin = Intent(this, LoginActivity::class.java)
             startActivity(intentToLogin)
         }
-
     }
 }

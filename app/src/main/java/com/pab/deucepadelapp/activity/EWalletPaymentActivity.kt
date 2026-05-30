@@ -22,7 +22,6 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-// MODEL RETROFIT SESUAI DOKUMEN API
 data class PaymentRequest(val method: String)
 data class PaymentResponseWrapper(val success: Boolean, val message: String, val data: PaymentData)
 data class PaymentData(val id: Int, val bookingId: Long, val method: String, val status: String)
@@ -42,7 +41,7 @@ class EWalletPaymentActivity : AppCompatActivity() {
     private lateinit var imgEWalletLogo: ImageView
     private lateinit var progressBar: ProgressBar
 
-    private val BASE_URL = "http://10.0.2.2:8080/" // Mengarah ke localhost laptop via emulator
+    private val BASE_URL = "https://paralegal-silicon-stoplight.ngrok-free.dev/"
     private var currentBookingId: Long = 10L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +57,6 @@ class EWalletPaymentActivity : AppCompatActivity() {
 
         tvBridgeStatus.text = "Mendaftarkan metode EWALLET ke server..."
 
-        // Cek ketersediaan aset gambar logo di folder res/drawable kamu jirr!
         when (methodDisplayName.lowercase()) {
             "dana" -> imgEWalletLogo.setImageResource(R.drawable.e_dana)
             "ovo" -> imgEWalletLogo.setImageResource(R.drawable.e_ovo)
@@ -77,8 +75,8 @@ class EWalletPaymentActivity : AppCompatActivity() {
 
         val apiService = retrofit.create(PaymentApiService::class.java)
 
-        val sharedPref = getSharedPreferences("DeuceAppPref", Context.MODE_PRIVATE)
-        val tokenLokal = sharedPref.getString("JWT_TOKEN", "") ?: ""
+        val sharedPref = getSharedPreferences("DeucePref", Context.MODE_PRIVATE)
+        val tokenLokal = sharedPref.getString("token", "") ?: ""
         val tokenBearer = "Bearer $tokenLokal"
 
         val requestBody = PaymentRequest(method = "EWALLET")
@@ -89,7 +87,6 @@ class EWalletPaymentActivity : AppCompatActivity() {
                     runOnUiThread {
                         tvBridgeStatus.text = "Menghubungkan ke $namaEWallet..."
 
-                        // Jeda 2 detik biar transisi loading-nya keliatan premium
                         Handler(Looper.getMainLooper()).postDelayed({
                             bukaEWalletDanSiapkanHalamanUpload(namaEWallet)
                         }, 2000)
@@ -104,7 +101,7 @@ class EWalletPaymentActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<PaymentResponseWrapper>, t: Throwable) {
                 runOnUiThread {
-                    Toast.makeText(this@EWalletPaymentActivity, "Server mati atau offline: ${t.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@EWalletPaymentActivity, "Server mati or offline: ${t.message}", Toast.LENGTH_LONG).show()
                     finish()
                 }
             }
@@ -119,22 +116,22 @@ class EWalletPaymentActivity : AppCompatActivity() {
             else -> "https://link.dana.id/pay"
         }
 
-        // Mempersiapkan halaman upload bukti di tumpukan Activity Android
-        val intentUpload = Intent(this, UploadProofActivity::class.java).apply {
+        val intentKeStruk = Intent(this, ReceiptSimulationActivity::class.java).apply {
             putExtra("BOOKING_ID", currentBookingId)
+            putExtra("COURT_NAME", "Nama Lapangan Kamu")
+            putExtra("PAYMENT_NAME", namaEWallet)
+            putExtra("GRAND_TOTAL", 152500.0)
         }
-        startActivity(intentUpload)
+        startActivity(intentKeStruk)
 
-        // Buka aplikasi E-Wallet luar
         try {
             val intentEWallet = Intent(Intent.ACTION_VIEW, Uri.parse(urlTujuan))
             startActivity(intentEWallet)
         } catch (e: Exception) {
-            // Fallback link web browser jika aplikasi e-wallet belum terinstal di HP/Emulator
             val intentWeb = Intent(Intent.ACTION_VIEW, Uri.parse("https://link.dana.id/pay"))
             startActivity(intentWeb)
         }
 
-        finish() // Hancurkan halaman jembatan loading agar tidak menumpuk pas di-back
+        finish()
     }
 }

@@ -29,6 +29,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    // 🔥 SISA KOTLINOPTIONS YANG EROR DI SINI SUDAH DIHAPUS TOTAL JIRR
 }
 
 dependencies {
@@ -44,7 +45,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    // 🔥 TAMBAHKAN BARIS INI JIRR (Wajib biar RequestBody versi baru terbaca)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // ==========================================

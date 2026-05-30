@@ -44,9 +44,6 @@ data class CourtItem(
     @SerializedName("longitude")
     val longitude: Double,
 
-    // =====================================================================
-    // TAMBAHAN BARU: Biar Data Tab Detail Lapangan Bisa Kebaca dari API!
-    // =====================================================================
     @SerializedName("coaches")
     val coaches: List<CoachItem>?,
 
@@ -57,7 +54,6 @@ data class CourtItem(
     val availableSlots: List<String>?
 )
 
-// Data class pendukung untuk list Coach dan Event
 data class CoachItem(
     @SerializedName("name") val name: String,
     @SerializedName("availableTime") val availableTime: String

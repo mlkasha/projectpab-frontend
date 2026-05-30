@@ -1,130 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="3dp"
-    app:cardBackgroundColor="#FFFFFF">
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/tvHistoryCourtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Lapangan"
+            android:textColor="#222222"
+            android:textSize="16sp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/tvHistoryStatus"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/tvHistoryStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PENDING"
+            android:textColor="#111111"
+            android:textSize="11sp"
+            android:background="@android:drawable/toast_frame"
+            android:backgroundTint="#CCFF00"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F0F0F0"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tvHistoryDate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:id="@+id/tvHistoryCourtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nama Lapangan"
-                android:textColor="#222222"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/tvHistoryStatus"
-                android:layout_marginEnd="10dp"/>
-
-            <TextView
-                android:id="@+id/tvHistoryStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PENDING"
-                android:textColor="#111111"
-                android:textSize="11sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:background="@android:drawable/toast_frame"
-                android:backgroundTint="#CCFF00"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="3dp"
-                android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F0F0F0"
-            android:layout_marginBottom="10dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="6dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="#5D6F2A"
-                android:layout_marginEnd="8dp"/>
-
-            <TextView
-                android:id="@+id/tvHistoryDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kamis, 10 Juli 2025"
-                android:textColor="#555555"
-                android:textSize="13sp"
-                android:fontFamily="@font/poppins_regular"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@android:drawable/ic_menu_recent_history"
-                app:tint="#5D6F2A"
-                android:layout_marginEnd="8dp"/>
-
-            <TextView
-                android:id="@+id/tvHistoryTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10:00 - 12:00 (2 Jam)"
-                android:textColor="#555555"
-                android:textSize="13sp"
-                android:fontFamily="@font/poppins_regular"/>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Pembayaran"
-                android:textColor="#999999"
-                android:textSize="12sp"
-                android:fontFamily="@font/poppins_regular"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"/>
-
-            <TextView
-                android:id="@+id/tvHistoryTotalPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp 300.000"
-                android:textColor="#5D6F2A"
-                android:textSize="15sp"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
+            android:text="Kamis, 10 Juli 2025"
+            android:textColor="#555555"
+            android:textSize="13sp"/>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@android:drawable/ic_menu_recent_history"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tvHistoryTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:00 - 12:00 (2 Jam)"
+            android:textColor="#555555"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Pembayaran"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tvHistoryTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 300.000"
+            android:textColor="#5D6F2A"
+            android:textSize="15sp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
 
-// STRUCT DATA SESUAI FORMAT RESPONSE WRAPPER BACKEND KAMU
 data class UserProfileResponse(
     val success: Boolean,
     val message: String,
@@ -31,7 +30,6 @@ data class RealUserData(
     val role: String
 )
 
-// INTERFACE RETROFIT UNTUK GET /api/auth/me
 interface ProfileApiService {
     @GET("api/auth/me")
     fun dapatkanDataUserAktif(
@@ -47,31 +45,26 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var tvProfilePhone: TextView
     private lateinit var btnBookNow: Button
 
-    // Mengarah ke localhost laptop via Emulator Android Studio
-    private val BACKEND_URL = "http://10.0.2.2:8080/"
+    private val BACKEND_URL = "https://paralegal-silicon-stoplight.ngrok-free.dev/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Hubungkan Variabel dengan ID Komponen XML
         tvProfileName = findViewById(R.id.tvProfileName)
         tvProfileRole = findViewById(R.id.tvProfileRole)
         tvProfileEmail = findViewById(R.id.tvProfileEmail)
         tvProfilePhone = findViewById(R.id.tvProfilePhone)
         btnBookNow = findViewById(R.id.btnBookNow)
 
-        // Event Klik Tombol Booking Lapangan
         btnBookNow.setOnClickListener {
             Toast.makeText(this, "Membuka daftar Lapangan Padel...", Toast.LENGTH_SHORT).show()
         }
 
-        // Jalankan fungsi ambil data riil database
         muatDataProfileAsli()
     }
 
     private fun muatDataProfileAsli() {
-        // Menggunakan Retrofit cara klasik murni biar gak bentrok library okhttp extension
         val retrofit = Retrofit.Builder()
             .baseUrl(BACKEND_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -79,9 +72,8 @@ class ProfileActivity : AppCompatActivity() {
 
         val serviceApi = retrofit.create(ProfileApiService::class.java)
 
-        // Menarik JWT token asli dari SharedPreferences login-an kamu jirr
-        val sharedPreferences = getSharedPreferences("DeuceAppPref", Context.MODE_PRIVATE)
-        val stringToken = sharedPreferences.getString("JWT_TOKEN", "") ?: ""
+        val sharedPreferences = getSharedPreferences("DeucePref", Context.MODE_PRIVATE)
+        val stringToken = sharedPreferences.getString("token", "") ?: ""
         val headerBearerToken = "Bearer $stringToken"
 
         if (stringToken.isEmpty()) {
@@ -90,7 +82,6 @@ class ProfileActivity : AppCompatActivity() {
             return
         }
 
-        // Tembak API database Spring Boot
         serviceApi.dapatkanDataUserAktif(headerBearerToken).enqueue(object : Callback<UserProfileResponse> {
             override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
                 if (response.isSuccessful && response.body() != null) {
@@ -99,7 +90,6 @@ class ProfileActivity : AppCompatActivity() {
                     if (bodyRespons.success) {
                         val dataUserDariDatabase = bodyRespons.data
 
-                        // Menuangkan isi DB langsung ke komponen UI
                         tvProfileName.text = dataUserDariDatabase.name
                         tvProfileRole.text = "Role: ${dataUserDariDatabase.role}"
                         tvProfileEmail.text = dataUserDariDatabase.email
@@ -113,8 +103,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
-                // Muncul kalau Spring Boot kamu di laptop mati jirr
-                Toast.makeText(this@ProfileActivity, "Koneksi ke Database Terputus: ${t.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@ProfileActivity, "Koneksi ke Database Terputus: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

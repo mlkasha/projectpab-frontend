@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6F8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Invoice"
+            android:textSize="20sp"
+            android:textColor="#222222"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/layoutCardStruk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEUCE PADEL APP"
+                android:textSize="18sp"
+                android:textColor="#5D6F2A"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Official Payment Receipt"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Booking ID"
+                    android:textColor="#888888"/>
+                <TextView
+                    android:id="@+id/tvReceiptBookingId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="#10"
+                    android:textColor="#222222"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Court Name"
+                    android:textColor="#888888"/>
+                <TextView
+                    android:id="@+id/tvReceiptCourtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Padel Court"
+                    android:textColor="#222222"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Method"
+                    android:textColor="#888888"/>
+                <TextView
+                    android:id="@+id/tvReceiptMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="BCA Virtual Account"
+                    android:textColor="#222222"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Virtual Account / Code"
+                    android:textColor="#888888"/>
+                <TextView
+                    android:id="@+id/tvReceiptCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="8830123456789"
+                    android:textColor="#5D6F2A"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TOTAL AMOUNT"
+                    android:textColor="#222222"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/tvReceiptTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Rp 152.500"
+                    android:textColor="#111111"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDownloadReceipt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="DOWNLOAD RECEIPT"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#222222"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"/>
+
+        <ImageView
+            android:id="@+id/ivReceiptSelectedProof"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="#FFFFFF"
+            android:scaleType="centerInside"
+            android:src="@android:drawable/ic_menu_gallery"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnReceiptSelectImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PILIH BUKTI TRANSFER DARI GALERI"
+            android:textColor="#222222"
+            android:backgroundTint="#EEEEEE"/>
+
+        <Button
+            android:id="@+id/btnReceiptSubmitProof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="KIRIM BUKTI PEMBAYARAN"
+            android:textColor="#111111"
+            android:backgroundTint="#CCFF00"/>
+
+    </LinearLayout>
+</ScrollView>

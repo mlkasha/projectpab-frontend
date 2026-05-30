@@ -3,13 +3,9 @@ package com.pab.deucepadelapp.api
 import retrofit2.Call
 import retrofit2.http.*
 import okhttp3.MultipartBody
-import com.pab.deucepadelapp.model.* // Otomatis mengimpor semua data class model yang digunakan
+import com.pab.deucepadelapp.model.*
 
 interface ApiService {
-
-    // ==========================================
-    // 1. AUTHENTICATION (AUTENTIKASI)
-    // ==========================================
 
     @POST("api/auth/register")
     fun register(@Body request: RegisterRequest): Call<AuthResponse>
@@ -23,30 +19,17 @@ interface ApiService {
     @POST("api/auth/logout")
     fun logout(@Header("Authorization") token: String): Call<BaseResponse>
 
-
-    // ==========================================
-    // 2. COURTS (LAPANGAN)
-    // ==========================================
-
-    // Mengambil daftar semua lapangan aktif untuk halaman Home
     @GET("api/courts")
     fun getCourts(): Call<CourtResponse>
 
-    // Mengambil detail satu lapangan berdasarkan ID
     @GET("api/courts/{id}")
     fun getCourtDetail(@Path("id") courtId: Int): Call<CourtDetailResponse>
 
-    // Mengecek ketersediaan slot waktu pada tanggal tertentu (format: YYYY-MM-DD)
     @GET("api/courts/{id}/slots")
     fun getCourtSlots(
         @Path("id") courtId: Int,
         @Query("date") date: String
     ): Call<SlotResponse>
-
-
-    // ==========================================
-    // 3. BOOKINGS (PEMESANAN LAPANGAN)
-    // ==========================================
 
     @POST("api/bookings")
     fun createBooking(
@@ -69,11 +52,6 @@ interface ApiService {
         @Path("id") bookingId: Int
     ): Call<BaseResponse>
 
-
-    // ==========================================
-    // 4. PAYMENTS (PEMBAYARAN)
-    // ==========================================
-
     @POST("api/payments/{bookingId}/method")
     fun choosePaymentMethod(
         @Header("Authorization") token: String,
@@ -81,7 +59,6 @@ interface ApiService {
         @Body request: PaymentMethodRequest
     ): Call<BaseResponse>
 
-    // Endpoint untuk upload bukti bayar menggunakan format file/gambar (Multipart)
     @Multipart
     @POST("api/payments/{bookingId}/proof")
     fun uploadPaymentProof(
@@ -96,18 +73,8 @@ interface ApiService {
         @Path("bookingId") bookingId: Int
     ): Call<PaymentStatusResponse>
 
-
-    // ==========================================
-    // 5. NOTIFICATIONS (NOTIFIKASI)
-    // ==========================================
-
     @GET("api/notifications")
     fun getNotifications(@Header("Authorization") token: String): Call<NotificationResponse>
-
-
-    // ==========================================
-    // 6. ADMIN (FITUR KHUSUS ADMIN)
-    // ==========================================
 
     @GET("api/bookings/admin/all")
     fun adminGetAllBookings(@Header("Authorization") token: String): Call<BookingListResponse>
@@ -130,16 +97,9 @@ interface ApiService {
         @Path("bookingId") bookingId: Int
     ): Call<BaseResponse>
 
-
-    // ==========================================
-    // 7. REAL LOCATION-BASED FILTER
-    // ==========================================
-
-    // Mengambil rekomendasi lapangan terdekat berdasarkan koordinat live GPS pengguna
     @GET("api/courts/near-me")
     fun getNearMeCourts(
         @Query("lat") latitude: Double,
         @Query("lng") longitude: Double
     ): Call<CourtResponse>
-
 }

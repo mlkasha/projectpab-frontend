@@ -1,8 +1,5 @@
 package com.pab.deucepadelapp.model
 
-// ==========================================
-// 1. MODEL AUTHENTICATION (LOGIN & REGISTER)
-// ==========================================
 data class RegisterRequest(
     val name: String,
     val email: String,
@@ -40,9 +37,6 @@ data class ProfileResponse(
     val data: UserData?
 )
 
-// ==========================================
-// 2. MODEL BOOKING (MENGHILANGKAN 16 ERROR DI APISERVICE)
-// ==========================================
 data class BookingRequest(
     val courtId: Long,
     val bookingDate: String,
@@ -88,9 +82,6 @@ data class BookingDetailData(
     val createdAt: String
 )
 
-// ==========================================
-// 3. MODEL PAYMENT, SLOT, NOTIFICATION & BASE
-// ==========================================
 data class PaymentMethodRequest(
     val method: String
 )

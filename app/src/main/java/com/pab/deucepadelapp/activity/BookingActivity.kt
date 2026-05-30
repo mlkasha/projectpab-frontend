@@ -17,13 +17,10 @@ class BookingActivity : AppCompatActivity() {
 
     private lateinit var btnHeaderEWallet: RelativeLayout
     private lateinit var layoutChildEWallet: LinearLayout
-    private lateinit var ivArrowEWallet: ImageView
 
     private lateinit var btnHeaderVA: RelativeLayout
     private lateinit var layoutChildVA: LinearLayout
-    private lateinit var ivArrowVA: ImageView
 
-    // Deklarasi RadioButton secara spesifik agar bisa ditembak paksa lewat klik baris
     private lateinit var rbDana: RadioButton
     private lateinit var rbOvo: RadioButton
     private lateinit var rbSpay: RadioButton
@@ -48,7 +45,6 @@ class BookingActivity : AppCompatActivity() {
     private var courtName: String = ""
     private var bookingId: Long = 10L
 
-    // Variabel penampung data pembayaran global (Dikunci mati di sini)
     private var selectedPaymentCategory: String = ""
     private var selectedPaymentName: String = ""
 
@@ -59,37 +55,24 @@ class BookingActivity : AppCompatActivity() {
         initViews()
         parseIntentData()
         setupDropdownLogic()
-        setupRowClickLogic() // Pindah ke sistem klik baris layout (Anti-Gagal)
+        setupRowClickLogic()
 
         btnBackBooking.setOnClickListener { finish() }
 
         btnProceedPayment.setOnClickListener {
-            // Validasi final sebelum pindah halaman
             if (selectedPaymentCategory.isEmpty() || selectedPaymentName.isEmpty()) {
                 Toast.makeText(this, "Harap pilih salah satu metode pembayaran terlebih dahulu!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            when (selectedPaymentCategory) {
-                "EWALLET" -> {
-                    val intentEWallet = Intent(this, EWalletPaymentActivity::class.java).apply {
-                        putExtra("METHOD_API", "EWALLET")
-                        putExtra("METHOD_DISPLAY_NAME", selectedPaymentName)
-                        putExtra("GRAND_TOTAL", finalGrandTotal)
-                        putExtra("BOOKING_ID", bookingId)
-                    }
-                    startActivity(intentEWallet)
-                }
-                "TRANSFER" -> {
-                    val intentVA = Intent(this, VirtualAccountActivity::class.java).apply {
-                        putExtra("METHOD_API", "TRANSFER")
-                        putExtra("BANK_DISPLAY_NAME", selectedPaymentName)
-                        putExtra("GRAND_TOTAL", finalGrandTotal)
-                        putExtra("BOOKING_ID", bookingId)
-                    }
-                    startActivity(intentVA)
-                }
+            val intentKeStruk = Intent(this, ReceiptSimulationActivity::class.java).apply {
+                putExtra("BOOKING_ID", bookingId)
+                putExtra("COURT_NAME", courtName)
+                putExtra("PAYMENT_NAME", selectedPaymentName)
+                putExtra("GRAND_TOTAL", finalGrandTotal)
             }
+            startActivity(intentKeStruk)
+            finish()
         }
     }
 
@@ -102,13 +85,10 @@ class BookingActivity : AppCompatActivity() {
 
         btnHeaderEWallet = findViewById(R.id.btnHeaderEWallet)
         layoutChildEWallet = findViewById(R.id.layoutChildEWallet)
-        ivArrowEWallet = findViewById(R.id.ivArrowEWallet)
 
         btnHeaderVA = findViewById(R.id.btnHeaderVA)
         layoutChildVA = findViewById(R.id.layoutChildVA)
-        ivArrowVA = findViewById(R.id.ivArrowVA)
 
-        // Inisialisasi RadioButton bawaan
         rbDana = findViewById(R.id.rbDana)
         rbOvo = findViewById(R.id.rbOvo)
         rbSpay = findViewById(R.id.rbSpay)
@@ -166,64 +146,61 @@ class BookingActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * FIX UTAMA: Tembak langsung parent view (Baris RelativeLayout) agar peka sentuhan.
-     * Mengeliminasi bug ketidaksinkronan antara klik text/logo dengan RadioButton.
-     */
     private fun setupRowClickLogic() {
         val allRadioButtons = listOf(rbDana, rbOvo, rbSpay, rbBri, rbBca, rbMandiri, rbBsi, rbBni)
 
-        // Fungsi pembantu untuk memadamkan semua bulatan kecuali yang dipilih
         fun clearAllExcept(target: RadioButton) {
             allRadioButtons.forEach { it.isChecked = (it == target) }
         }
 
-        // 1. KELOMPOK E-WALLET (Akses via parent RelativeLayout dari RadioButton)
         listOf(rbDana, rbOvo, rbSpay).forEach { rb ->
-            val rowLayout = rb.parent as? RelativeLayout
+            val rowLayout = rb.parent as? View
             rowLayout?.setOnClickListener {
-                clearAllExcept(rb)
-                selectedPaymentCategory = "EWALLET"
-                selectedPaymentName = when (rb.id) {
-                    R.id.rbDana -> "Dana"
-                    R.id.rbOvo -> "OVO"
-                    R.id.rbSpay -> "ShopeePay"
-                    else -> "E-Wallet"
-                }
-
-                adminMethodFee = 1000.0
-                tvMethodFeeLabel.text = "Admin Fee (E-Wallet)"
-                layoutMethodFeeDetail.visibility = View.VISIBLE
-                tvMethodFeePrice.text = "Rp ${String.format("%,.0f", adminMethodFee)}"
-                calculateAndDisplayGrandTotal()
+                if (!rb.isChecked) { clearAllExcept(rb); rb.isChecked = true }
             }
-            // Tetap pasang di RadioButton-nya langsung jaga-jaga kalau user pas ngeklik pas di bulatannya
-            rb.setOnClickListener { rowLayout?.performClick() }
+            rb.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    clearAllExcept(rb)
+                    selectedPaymentCategory = "EWALLET"
+                    selectedPaymentName = when (rb.id) {
+                        R.id.rbDana -> "Dana"
+                        R.id.rbOvo -> "OVO"
+                        R.id.rbSpay -> "ShopeePay"
+                        else -> "E-Wallet"
+                    }
+                    adminMethodFee = 1000.0
+                    tvMethodFeeLabel.text = "Admin Fee (E-Wallet)"
+                    layoutMethodFeeDetail.visibility = View.VISIBLE
+                    tvMethodFeePrice.text = "Rp ${String.format("%,.0f", adminMethodFee)}"
+                    calculateAndDisplayGrandTotal()
+                }
+            }
         }
 
-        // 2. KELOMPOK VIRTUAL ACCOUNT (Akses via parent RelativeLayout dari RadioButton)
         listOf(rbBri, rbBca, rbMandiri, rbBsi, rbBni).forEach { rb ->
-            val rowLayout = rb.parent as? RelativeLayout
+            val rowLayout = rb.parent as? View
             rowLayout?.setOnClickListener {
-                clearAllExcept(rb)
-                selectedPaymentCategory = "TRANSFER"
-                selectedPaymentName = when (rb.id) {
-                    R.id.rbBri -> "BRI Virtual Account"
-                    R.id.rbBca -> "BCA Virtual Account"
-                    R.id.rbMandiri -> "Mandiri Virtual Account"
-                    R.id.rbBsi -> "BSI Virtual Account"
-                    R.id.rbBni -> "BNI Virtual Account"
-                    else -> "Virtual Account"
-                }
-
-                adminMethodFee = 2500.0
-                tvMethodFeeLabel.text = "Admin Fee (VA)"
-                layoutMethodFeeDetail.visibility = View.VISIBLE
-                tvMethodFeePrice.text = "Rp ${String.format("%,.0f", adminMethodFee)}"
-                calculateAndDisplayGrandTotal()
+                if (!rb.isChecked) { clearAllExcept(rb); rb.isChecked = true }
             }
-            // Jaga-jaga kalau user pas ngeklik pas di bulatannya
-            rb.setOnClickListener { rowLayout?.performClick() }
+            rb.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    clearAllExcept(rb)
+                    selectedPaymentCategory = "TRANSFER"
+                    selectedPaymentName = when (rb.id) {
+                        R.id.rbBri -> "BRI Virtual Account"
+                        R.id.rbBca -> "BCA Virtual Account"
+                        R.id.rbMandiri -> "Mandiri Virtual Account"
+                        R.id.rbBsi -> "BSI Virtual Account"
+                        R.id.rbBni -> "BNI Virtual Account"
+                        else -> "Virtual Account"
+                    }
+                    adminMethodFee = 2500.0
+                    tvMethodFeeLabel.text = "Admin Fee (VA)"
+                    layoutMethodFeeDetail.visibility = View.VISIBLE
+                    tvMethodFeePrice.text = "Rp ${String.format("%,.0f", adminMethodFee)}"
+                    calculateAndDisplayGrandTotal()
+                }
+            }
         }
     }
 

@@ -19,12 +19,10 @@ class SplashActivity : AppCompatActivity() {
         val splashAnim = AnimationUtils.loadAnimation(this, R.anim.splash_animation)
         ivLogoDeuce.startAnimation(splashAnim)
 
-        // TIMER DIUBAH JADI 5 DETIK (5000 milidetik)
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
 
-            // KODE KUNCI: Efek transisi timbul/slide up saat berpindah halaman
             overridePendingTransition(R.anim.slide_in_up, R.anim.fade_out)
 
             finish()
