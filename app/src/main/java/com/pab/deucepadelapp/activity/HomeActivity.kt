@@ -10,6 +10,7 @@ import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +30,7 @@ import com.pab.deucepadelapp.api.ApiClient
 import com.pab.deucepadelapp.model.CourtItem
 import com.pab.deucepadelapp.model.CourtResponse
 import android.content.res.ColorStateList
+import android.widget.ImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -115,6 +117,7 @@ class HomeActivity : AppCompatActivity() {
         rvCourts.adapter = courtAdapter
 
         getCourtsFromApi()
+
         setupBottomNavigationLogic()
 
         etSearch.addTextChangedListener(object : TextWatcher {
@@ -143,29 +146,29 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupBottomNavigationLogic() {
         menuExplore.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-            overridePendingTransition(0, 0)
-            finish()
+            // Halaman saat ini, biarkan kosong
         }
 
         menuBookings.setOnClickListener {
-            startActivity(
-                Intent(this, BookingActivity::class.java)
-            )
+            val intentBookings = Intent(this, MyBookingsActivity::class.java)
+            // Mematikan animasi perpindahan Activity secara mutlak
+            intentBookings.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intentBookings)
+            // Fallback untuk versi Android terdahulu
             overridePendingTransition(0, 0)
         }
 
         menuHistory.setOnClickListener {
-            startActivity(
-                Intent(this, BookingHistoryActivity::class.java)
-            )
+            val intentHistory = Intent(this, BookingHistoryActivity::class.java)
+            intentHistory.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intentHistory)
             overridePendingTransition(0, 0)
         }
 
         menuProfile.setOnClickListener {
-            startActivity(
-                Intent(this, ProfileActivity::class.java)
-            )
+            val intentProfile = Intent(this, ProfileActivity::class.java)
+            intentProfile.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intentProfile)
             overridePendingTransition(0, 0)
         }
     }

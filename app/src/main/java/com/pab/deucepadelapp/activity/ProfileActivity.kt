@@ -135,9 +135,10 @@ class ProfileActivity : AppCompatActivity() {
             return
         }
 
-        // Tombol Kembali
+        // Tombol Kembali dibuat instan tanpa animasi penutupan
         btnBack.setOnClickListener {
             finish()
+            overridePendingTransition(0, 0)
         }
 
         // Klik Foto Profil untuk Ganti Gambar
@@ -159,28 +160,32 @@ class ProfileActivity : AppCompatActivity() {
         muatDataProfileAsli()
     }
 
-    // Fungsi setup navigasi ditaruh secara mandiri di luar onCreate
+    // Fungsi setup navigasi dengan mematikan animasi secara total
     private fun setupBottomNavigation() {
         menuExplore.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            val intentHome = Intent(this, HomeActivity::class.java)
+            // Mematikan animasi perpindahan Activity secara mutlak
+            intentHome.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intentHome)
+            overridePendingTransition(0, 0)
         }
 
         menuBookings.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Halaman Booking masih dalam pengembangan",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intentBookings = Intent(this, MyBookingsActivity::class.java)
+            intentBookings.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intentBookings)
+            overridePendingTransition(0, 0)
         }
 
         menuHistory.setOnClickListener {
-            startActivity(Intent(this, BookingHistoryActivity::class.java))
-            finish()
+            val intentHistory = Intent(this, BookingHistoryActivity::class.java)
+            intentHistory.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intentHistory)
+            overridePendingTransition(0, 0)
         }
 
         menuProfile.setOnClickListener {
-            // Malika sedang berada di halaman profile, abaikan atau beri feedback ringan
+            // Halaman saat ini, biarkan kosong
         }
     }
 
@@ -332,8 +337,11 @@ class ProfileActivity : AppCompatActivity() {
     private fun keluarKeHalamanLogin() {
         val intent = Intent(this, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            // Mematikan animasi agar transisi keluar akun langsung instan
+            addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         }
         startActivity(intent)
         finish()
+        overridePendingTransition(0, 0)
     }
 }

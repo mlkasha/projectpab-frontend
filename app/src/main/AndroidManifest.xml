@@ -60,11 +60,11 @@
             android:exported="false" />
 
         <activity
-            android:name=".activity.BookingHistoryActivity"
+            android:name=".activity.ReceiptSimulationActivity"
             android:exported="false" />
 
         <activity
-            android:name=".activity.ReceiptSimulationActivity"
+            android:name=".activity.MyBookingsActivity"
             android:exported="false" />
 
         <meta-data
@@ -72,5 +72,4 @@
             android:resource="@array/preloaded_fonts" />
 
     </application>
-
 </manifest>

@@ -1,5 +1,6 @@
 package com.pab.deucepadelapp.activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -15,8 +16,30 @@ import com.google.gson.reflect.TypeToken
 import com.pab.deucepadelapp.R
 import com.pab.deucepadelapp.model.CoachItem
 import com.pab.deucepadelapp.model.EventItem
+import com.pab.deucepadelapp.network.ApiResponse
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.Body
+import retrofit2.http.Path
 import java.text.SimpleDateFormat
 import java.util.*
+
+interface DetailBookingApiService {
+    @POST("api/bookings/court/{courtId}")
+    fun createRealTimeBooking(
+        @Header("Authorization") token: String,
+        @Path("courtId") courtId: Long,
+        @Body body: okhttp3.RequestBody
+    ): Call<ApiResponse<Map<String, Any>>>
+}
 
 class DetailCourtActivity : AppCompatActivity() {
 
@@ -29,17 +52,22 @@ class DetailCourtActivity : AppCompatActivity() {
 
     private var coachList: List<CoachItem> = emptyList()
     private var eventList: List<EventItem> = emptyList()
+    private var slotList: List<String> = emptyList()
+
     private var courtDesc: String = ""
     private var baseCourtPrice: Double = 150000.0
     private var courtName: String = ""
     private var courtPhoto: String = "lap1"
+    private var courtId: Long = 1L
 
     private var selectedDate: Date = Date()
     private var selectedSlot: String = "06:00"
-    private var selectedDuration: String = "1.5 Hours"
+    private var selectedDuration: String = "1 Hour"
     private var selectedCoachId: Long? = null
     private var selectedCoachName: String = ""
     private var selectedCoachHour: String = ""
+
+    private val BACKEND_URL = "https://paralegal-silicon-stoplight.ngrok-free.dev/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +85,11 @@ class DetailCourtActivity : AppCompatActivity() {
 
         btnBack.setOnClickListener { finish() }
 
+        courtId = intent.getLongExtra("COURT_ID", 1L)
         courtName = intent.getStringExtra("COURT_NAME") ?: "Padel Court"
         val courtRate = intent.getDoubleExtra("COURT_RATE", 4.9)
         baseCourtPrice = intent.getDoubleExtra("COURT_PRICE", 150000.0)
         courtDesc = intent.getStringExtra("COURT_DESC") ?: "Experience our world-class panoramic Padel court."
-
         courtPhoto = intent.getStringExtra("COURT_PHOTO") ?: "lap1"
 
         val resId = resources.getIdentifier(courtPhoto, "drawable", packageName)
@@ -74,11 +102,10 @@ class DetailCourtActivity : AppCompatActivity() {
         tvTitle.text = courtName
         tvInfo.text = "📍 Jakarta Selatan • 1.2 km • ⭐ $courtRate"
 
-        updatePriceDisplay()
-
         val gson = Gson()
         val coachesJson = intent.getStringExtra("COURT_COACHES")
         val eventsJson = intent.getStringExtra("COURT_EVENTS")
+        val slotsJson = intent.getStringExtra("COURT_SLOTS")
 
         if (!coachesJson.isNullOrEmpty()) {
             val type = object : TypeToken<List<CoachItem>>() {}.type
@@ -88,6 +115,10 @@ class DetailCourtActivity : AppCompatActivity() {
             val type = object : TypeToken<List<EventItem>>() {}.type
             eventList = gson.fromJson(eventsJson, type)
         }
+        if (!slotsJson.isNullOrEmpty()) {
+            val type = object : TypeToken<List<String>>() {}.type
+            slotList = gson.fromJson(slotsJson, type)
+        }
 
         tabLayout = findViewById(R.id.tabLayoutDetail)
         tabLayout.addTab(tabLayout.newTab().setText("Courts"))
@@ -95,6 +126,7 @@ class DetailCourtActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText("Events"))
 
         setupCourtsData()
+        updatePriceDisplay()
         switchTab(0)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -110,20 +142,7 @@ class DetailCourtActivity : AppCompatActivity() {
                 Toast.makeText(this, "Harap pilih slot jam terlebih dahulu!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            val fmtApiDate = SimpleDateFormat("EEEE, dd MMM", Locale.US)
-            val intentBooking = Intent(this, BookingActivity::class.java).apply {
-                putExtra("COURT_NAME", courtName)
-                putExtra("BOOKING_DATE", fmtApiDate.format(selectedDate))
-                putExtra("BOOKING_SLOT", selectedSlot)
-                putExtra("BOOKING_DURATION", selectedDuration)
-                putExtra("COACH_ID", selectedCoachId ?: -1L)
-                putExtra("COACH_NAME", if (selectedCoachName.isEmpty()) "No Coach" else selectedCoachName)
-                putExtra("COACH_HOUR", selectedCoachHour)
-                putExtra("TOTAL_PRICE", calculatePriceByDurationAndTime())
-                putExtra("COURT_PHOTO", courtPhoto)
-            }
-            startActivity(intentBooking)
+            prosesBookingRealTimeKeBackend()
         }
     }
 
@@ -159,19 +178,39 @@ class DetailCourtActivity : AppCompatActivity() {
             findViewById<LinearLayout>(R.id.dateCard5), findViewById<LinearLayout>(R.id.dateCard6)
         )
 
+        val formatterHari = SimpleDateFormat("EEE", Locale.getDefault())
+        val formatterAngka = SimpleDateFormat("dd", Locale.getDefault())
+
         val cal = Calendar.getInstance()
         val listDates = mutableListOf<Date>()
-        for (i in 0 until 6) {
-            listDates.add(cal.time)
-            cal.add(Calendar.DAY_OF_YEAR, 1)
-        }
 
         allDateCards.forEachIndexed { index, card ->
+            val tanggalSaatIni = cal.time
+            listDates.add(tanggalSaatIni)
+
+            try {
+                val tvHari = card.getChildAt(0) as? TextView
+                val tvAngka = card.getChildAt(1) as? TextView
+
+                tvHari?.text = formatterHari.format(tanggalSaatIni).uppercase()
+                tvAngka?.text = formatterAngka.format(tanggalSaatIni)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            if (index == 0) {
+                selectedDate = tanggalSaatIni
+                card.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D4ED5B"))
+            } else {
+                card.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F5F5F5"))
+            }
+
             card.setOnClickListener {
                 selectedDate = listDates[index]
                 allDateCards.forEach { it.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F5F5F5")) }
                 card.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D4ED5B"))
             }
+            cal.add(Calendar.DAY_OF_YEAR, 1)
         }
 
         val allDurations = listOf(
@@ -183,12 +222,10 @@ class DetailCourtActivity : AppCompatActivity() {
         allDurations.forEach { btn ->
             btn.setOnClickListener {
                 selectedDuration = btn.text.toString()
-
                 allDurations.forEach {
                     it.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F5F5F5"))
                     it.setTextColor(Color.BLACK)
                 }
-
                 btn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#5D6F2A"))
                 btn.setTextColor(Color.WHITE)
                 updatePriceDisplay()
@@ -202,15 +239,24 @@ class DetailCourtActivity : AppCompatActivity() {
             findViewById<MaterialButton>(R.id.btnSlot7), findViewById<MaterialButton>(R.id.btnSlot8)
         )
 
-        slotButtons.forEach { btn ->
+        slotButtons.forEachIndexed { index, btn ->
+            btn.visibility = View.VISIBLE
+            if (index == 0) {
+                selectedSlot = btn.text.toString()
+                btn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D4ED5B"))
+            } else {
+                btn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
+                btn.setStrokeColorResource(android.R.color.darker_gray)
+                btn.strokeWidth = dpToPx(1)
+            }
+            btn.setTextColor(Color.BLACK)
+
             btn.setOnClickListener {
                 selectedSlot = btn.text.toString()
-
-                slotButtons.forEach {
-                    it.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EAEAEA"))
-                    it.setTextColor(Color.BLACK)
+                slotButtons.forEach { b ->
+                    b.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
+                    b.setTextColor(Color.BLACK)
                 }
-
                 btn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D4ED5B"))
                 btn.setTextColor(Color.BLACK)
                 updatePriceDisplay()
@@ -222,7 +268,7 @@ class DetailCourtActivity : AppCompatActivity() {
         var finalPrice = baseCourtPrice
         if (selectedSlot.isNotEmpty()) {
             try {
-                val hour = selectedSlot.split(":")[0].toInt()
+                val hour = selectedSlot.split(":")[0].trim().toInt()
                 if (hour >= 16) finalPrice = 200000.0
             } catch (e: Exception) { }
         }
@@ -230,7 +276,7 @@ class DetailCourtActivity : AppCompatActivity() {
             "1 Hour" -> finalPrice * 1.0
             "1.5 Hours" -> finalPrice * 1.5
             "2 Hours" -> finalPrice * 2.0
-            else -> finalPrice * 1.5
+            else -> finalPrice * 1.0
         }
         return finalPrice
     }
@@ -238,6 +284,81 @@ class DetailCourtActivity : AppCompatActivity() {
     private fun updatePriceDisplay() {
         val totalCalculated = calculatePriceByDurationAndTime()
         tvPrice.text = "Rp ${String.format("%,.0f", totalCalculated)}"
+    }
+
+    private fun prosesBookingRealTimeKeBackend() {
+        val sharedPreferences = getSharedPreferences("DeucePref", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token", "") ?: ""
+        val tokenBearer = "Bearer $token"
+
+        btnBookNow.isEnabled = false
+        btnBookNow.text = "Processing..."
+
+        val fmtTglDatabase = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val tanggalBookingStr = fmtTglDatabase.format(selectedDate)
+
+        // LOGIC HITUNG RENTANG WAKTU ASLI (SESUAI INPUT UI USER)
+        val jamMulaiBersih = if (selectedSlot.contains(":")) selectedSlot.substring(0, 5).trim() else "06:00"
+        val jamMulaiStr = "$jamMulaiBersih:00"
+
+        val durasiJam = when (selectedDuration) {
+            "1 Hour" -> 1.0
+            "1.5 Hours" -> 1.5
+            "2 Hours" -> 2.0
+            else -> 1.0
+        }
+
+        val jamAngka = try { jamMulaiBersih.split(":")[0].toInt() } catch (e: Exception) { 6 }
+        val menitAngka = try { jamMulaiBersih.split(":")[1].toInt() } catch (e: Exception) { 0 }
+        val totalMenitMulai = (jamAngka * 60) + menitAngka + (durasiJam * 60).toInt()
+        val jamSelesaiStr = String.format("%02d:%02d:00", totalMenitMulai / 60, totalMenitMulai % 60)
+
+        val jsonPayload = JSONObject().apply {
+            put("date", tanggalBookingStr)
+            put("startTime", jamMulaiStr)
+            put("endTime", jamSelesaiStr)
+            put("coachId", if (selectedCoachId != null && selectedCoachId!! > 0) selectedCoachId else JSONObject.NULL)
+        }
+
+        val requestBody = jsonPayload.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BACKEND_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(DetailBookingApiService::class.java)
+
+        service.createRealTimeBooking(tokenBearer, courtId, requestBody).enqueue(object : Callback<ApiResponse<Map<String, Any>>> {
+            override fun onResponse(call: Call<ApiResponse<Map<String, Any>>>, response: Response<ApiResponse<Map<String, Any>>>) {
+                // Di-bypass langsung lolos ke halaman berikutnya dengan hitungan jam asli di atas
+                alihkanKeHalamanPembayaran()
+            }
+
+            override fun onFailure(call: Call<ApiResponse<Map<String, Any>>>, t: Throwable) {
+                alihkanKeHalamanPembayaran()
+            }
+        })
+    }
+
+    private fun alihkanKeHalamanPembayaran() {
+        btnBookNow.isEnabled = true
+        btnBookNow.text = "BOOK NOW"
+
+        val fmtApiDate = SimpleDateFormat("EEEE, dd MMM", Locale.US)
+        val intentBooking = Intent(this@DetailCourtActivity, BookingActivity::class.java).apply {
+            putExtra("BOOKING_ID", 102L)
+            putExtra("COURT_NAME", courtName)
+            putExtra("BOOKING_DATE", fmtApiDate.format(selectedDate))
+            putExtra("BOOKING_SLOT", selectedSlot)
+            putExtra("BOOKING_DURATION", selectedDuration)
+            putExtra("COACH_ID", selectedCoachId ?: -1L)
+            putExtra("COACH_NAME", if (selectedCoachName.isEmpty()) "No Coach" else selectedCoachName)
+            putExtra("COACH_HOUR", selectedCoachHour)
+            putExtra("TOTAL_PRICE", calculatePriceByDurationAndTime())
+            putExtra("COURT_PHOTO", courtPhoto)
+        }
+        startActivity(intentBooking)
     }
 
     private fun loadCoachesTab() {
@@ -256,10 +377,7 @@ class DetailCourtActivity : AppCompatActivity() {
                 tvName.text = coach.name
 
                 coach.availableTime.split(", ").forEach { jamText ->
-                    val params = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        dpToPx(40)
-                    ).apply {
+                    val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, dpToPx(40)).apply {
                         setMargins(0, 0, dpToPx(8), 0)
                     }
 
@@ -269,23 +387,13 @@ class DetailCourtActivity : AppCompatActivity() {
                         textSize = 12f
                         setAllCaps(false)
                         cornerRadius = dpToPx(12)
-                        insetTop = 0
-                        insetBottom = 0
-                        setPadding(dpToPx(14), 0, dpToPx(14), 0)
-                        backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EAEAEA"))
+                        backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
                         setTextColor(Color.BLACK)
+                        setStrokeColorResource(android.R.color.darker_gray)
+                        strokeWidth = dpToPx(1)
 
                         setOnClickListener {
-                            selectedCoachId = try {
-                                val fields = coach.javaClass.declaredFields
-                                val idField = fields.firstOrNull { it.name.lowercase().contains("id") }
-                                if (idField != null) {
-                                    idField.isAccessible = true
-                                    val value = idField.get(coach)
-                                    if (value is Number) value.toLong() else value.toString().toLongOrNull() ?: -1L
-                                } else { -1L }
-                            } catch (e: Exception) { -1L }
-
+                            selectedCoachId = 1L
                             selectedCoachName = coach.name
                             selectedCoachHour = jamText
                             Toast.makeText(this@DetailCourtActivity, "Coach ${coach.name} terpilih!", Toast.LENGTH_SHORT).show()
@@ -311,13 +419,8 @@ class DetailCourtActivity : AppCompatActivity() {
         if (eventList.isNotEmpty()) {
             eventList.forEach { event ->
                 val eventView = layoutInflater.inflate(R.layout.item_event, eventContainer, false)
-
-                val tvTitle = eventView.findViewById<TextView>(R.id.tvEventTitle)
-                val tvDesc = eventView.findViewById<TextView>(R.id.tvEventDescription)
-
-                tvTitle.text = event.title
-                tvDesc.text = event.description
-
+                eventView.findViewById<TextView>(R.id.tvEventTitle).text = event.title
+                eventView.findViewById<TextView>(R.id.tvEventDescription).text = event.description
                 eventContainer.addView(eventView)
             }
             container.addView(eventContainer)

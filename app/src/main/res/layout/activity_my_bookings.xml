@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="#FAFAFA"
+    tools:context=".activity.MyBookingsActivity">
 
     <LinearLayout
         android:id="@+id/pageContentContainer"
@@ -16,41 +17,97 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
 
         <RelativeLayout
-            android:id="@+id/layoutHeader"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@android:color/white"
-            android:paddingHorizontal="16dp">
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="16dp">
 
             <ImageView
-                android:id="@+id/btnBackHistory"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:id="@+id/btnHeaderHistory"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerVertical="true"
-                android:padding="6dp"
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_arrow_back"
-                app:tint="#222222"
+                app:tint="#000000"
                 android:contentDescription="Back Button" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/btnBackHistory"
+                android:layout_toEndOf="@id/btnHeaderHistory"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
-                android:text="Booking History"
-                android:textColor="#222222"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins_bold" />
+                android:text="My Bookings"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold" />
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBookingHistory"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="20dp"
-            android:clipToPadding="false"
-            android:scrollbars="none" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="12dp"
+            app:cardCornerRadius="24dp"
+            app:cardBackgroundColor="#EAEAEA"
+            app:strokeWidth="0dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/tabActive"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:text="Active"
+                    android:textColor="#2A3B50"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tabPast"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Past"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMyBookings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                tools:listitem="@layout/item_my_booking" />
+
+            <TextView
+                android:id="@+id/tvBookingEmptyState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Belum ada jadwal booking aktif"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
@@ -111,14 +168,14 @@
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:src="@drawable/ic_booking" />
+                    android:src="@drawable/ic_booking_green" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Bookings"
-                    android:textColor="#888888"
+                    android:textColor="#D4F03B"
                     android:textSize="12sp"
                     android:fontFamily="@font/poppins_regular" />
             </LinearLayout>
@@ -137,14 +194,14 @@
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:src="@drawable/ic_history_green" />
+                    android:src="@drawable/ic_history" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="History"
-                    android:textColor="#D4F03B"
+                    android:textColor="#888888"
                     android:textSize="12sp"
                     android:fontFamily="@font/poppins_regular" />
             </LinearLayout>

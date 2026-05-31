@@ -60,11 +60,11 @@ interface ApiService {
     ): Call<BaseResponse>
 
     @Multipart
-    @POST("api/payments/{bookingId}/proof")
+    @POST("api/payments/{bookingId}/upload")
     fun uploadPaymentProof(
         @Header("Authorization") token: String,
         @Path("bookingId") bookingId: Int,
-        @Part proof: MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): Call<BaseResponse>
 
     @GET("api/payments/{bookingId}")
@@ -102,4 +102,23 @@ interface ApiService {
         @Query("lat") latitude: Double,
         @Query("lng") longitude: Double
     ): Call<CourtResponse>
+
+    @PUT("api/users/profile/update-name")
+    fun updateName(
+        @Header("Authorization") token: String,
+        @Body request: UpdateNameRequest
+    ): Call<BaseResponse>
+
+    @PUT("api/users/profile/update-account")
+    fun updateAccount(
+        @Header("Authorization") token: String,
+        @Body request: UpdateAccountRequest
+    ): Call<BaseResponse>
+
+    @Multipart
+    @POST("api/users/profile/update-avatar")
+    fun updateAvatar(
+        @Header("Authorization") token: String,
+        @Part file: MultipartBody.Part
+    ): Call<BaseResponse>
 }

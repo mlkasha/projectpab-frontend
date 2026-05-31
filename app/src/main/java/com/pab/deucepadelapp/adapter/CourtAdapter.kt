@@ -46,23 +46,13 @@ class CourtAdapter(private var courtList: ArrayList<CourtItem>) :
         }
         holder.tvCourtPrice.text = "Rp ${String.format("%,.0f", courtPrice)}"
 
-        val idString = court.id.toString().trim()
-
-        val imageResource = when {
-            idString.contains("1") -> R.drawable.lap1
-            idString.contains("2") -> R.drawable.lap2
-            idString.contains("3") -> R.drawable.lap3
-            idString.contains("4") -> R.drawable.lap4
-            idString.contains("5") -> R.drawable.lap5
-            else -> {
-                when (position % 5) {
-                    0 -> R.drawable.lap1
-                    1 -> R.drawable.lap2
-                    2 -> R.drawable.lap3
-                    3 -> R.drawable.lap4
-                    else -> R.drawable.lap5
-                }
-            }
+        val imageResource = when (court.photoUrl) {
+            "lap1" -> R.drawable.lap1
+            "lap2" -> R.drawable.lap2
+            "lap3" -> R.drawable.lap3
+            "lap4" -> R.drawable.lap4
+            "lap5" -> R.drawable.lap5
+            else -> R.drawable.lap1
         }
 
         Glide.with(context)

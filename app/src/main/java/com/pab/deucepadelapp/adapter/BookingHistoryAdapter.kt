@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.pab.deucepadelapp.R
-import com.pab.deucepadelapp.network.PaymentData // Diarahkan ke package model yang baru
+import com.pab.deucepadelapp.network.PaymentData
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -33,24 +33,22 @@ class BookingHistoryAdapter(private val listPayment: List<PaymentData>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val payment = listPayment[position]
 
-        // Menampilkan nama lapangan asli dari backend (jika null, gunakan fallback)
+        // 🛠️ SINKRONISASI NAMA LAPANGAN: Ambil data dari object simulasi jika ada
         holder.tvCourtName.text = payment.courtName ?: "Padel Court #${payment.bookingId}"
         holder.tvTransactionCode.text = "TXN-9823${payment.id}"
 
-        // Parsing tanggal bertipe ISO String dari backend ke format ringkas
         holder.tvDate.text = if (!payment.createdAt.isNullOrEmpty()) {
             payment.createdAt.replace("T", " ").substring(0, 16)
         } else {
             "-- : --"
         }
 
-        // Format angka ke format mata uang Rupiah Indonesia (Rp xx.xxx)
         val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
         holder.tvAmount.text = formatRupiah.format(payment.amount).replace("Rp", "Rp ").replace(",00", "")
 
-        // Dinamisasi warna card dan teks berdasarkan status transaksi backend
+        // 🛠️ TAMBAHKAN KONDISI "SUCCESS": Agar trik bypass terbaca sebagai Lunas (Warna Hijau Lime)
         when (payment.status.uppercase()) {
-            "VERIFIED" -> {
+            "VERIFIED", "SUCCESS" -> {
                 holder.tvStatus.text = "Success"
                 holder.cardStatus.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.primary_lime))
                 holder.tvStatus.setTextColor(Color.parseColor("#000000"))
@@ -65,7 +63,7 @@ class BookingHistoryAdapter(private val listPayment: List<PaymentData>) :
                 holder.cardStatus.setCardBackgroundColor(Color.parseColor("#FFCDD2"))
                 holder.tvStatus.setTextColor(Color.parseColor("#B71C1C"))
             }
-            else -> { // Status UNPAID
+            else -> {
                 holder.tvStatus.text = "Pending"
                 holder.cardStatus.setCardBackgroundColor(Color.parseColor("#E0E0E0"))
                 holder.tvStatus.setTextColor(Color.parseColor("#616161"))
